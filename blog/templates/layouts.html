@@ -1,0 +1,43 @@
+{% extends 'bootstrap/base.html' %}
+
+<html>
+    <head>
+      <!-- Adapted from Grinberg, 2017 -->
+        {% if title %}
+        <title>{{ title }} - HWR</title>
+        {% else %}
+        <title>Welcome to HWR</title>
+        {% endif %}
+    </head>
+    <body>
+        {% include 'navig.html' %}
+      
+          
+            
+        <div id="content">
+        
+        {% block content %}
+        <div>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        {% endblock content %}
+
+      </div>
+    </body>
+
+    <script type=text/javascript src="{{
+      url_for('static', filename='jquery.js') }}"></script>
+      <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+      </script>
+</html>
+

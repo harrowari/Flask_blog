@@ -1,0 +1,35 @@
+{% extends "layouts.html" %}
+
+
+{% block content %}
+{{super()}}
+
+<div id='pers_greet'>
+    {% if current_user.is_anonymous %}
+    <h1>Hello, guest!</h1>
+    {% else %}
+    <h1>Hello, {{ current_user.username }}</h1>
+    {% endif %}
+</div>
+<div class='blog_post'>
+    {% for post in posts %}
+        <p><a href="{{ url_for('post', post_id=post.id) }}"><p> Entry number: {{ post.id}} </p>
+            <img src="{{ url_for('static', filename='img/' + post.image_file) }}"></a></p>
+       
+        <p id='post_title'> {{ post.title}} </p>
+        <p id='short_description'> {{ post.description}} </p>
+
+        <p> Published on: {{ post.timestamp}} </p>
+        <p> User ID: {{ post.author_id}} </p>
+    {% endfor %}
+</div>
+
+<form action="" method="POST">
+    {{ sort.csrf_token }}
+    <p>{{ sort.order.label }}</p>
+    <p>{{ sort.order }}</p>
+</form>
+
+{% include "footer.html" %}
+
+{% endblock %}

@@ -1,0 +1,172 @@
+<style>
+    .post_rating {
+        display: flex
+    }
+    .post_rating a {
+        cursor: pointer;
+    }
+</style>
+
+{% extends "layouts.html" %}
+
+{% block content %}
+
+{{ super() }}
+
+<h1 class='post_title'>{{ post.title }}</h1>
+<p>"{{ post.timestamp }}" &nbsp Author: {{ post.author_id }} (Harri) </p>
+<p class='detailed_description'>{{ post.body }}</p>
+<img src="{{ url_for('static', filename='img/' + post.image_file) }}">
+
+
+
+{% if average_post %}
+    <p>Average rating: {{ average_post }}</p>
+{% else %}
+    <p>Not yet rated</p>
+{% endif %}
+
+<p>Comments</p>
+{% for i in data %}
+
+    <p class='comment_text'>{{loop.index}} {{i}}</p>
+
+{% endfor %}
+
+
+{% if current_user.is_anonymous %}
+    <p>You must be logged in to comment on a post</p>
+{% else %}
+<form action="{{ url_for('comment_form', post_id=post.id)}}" method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.body.label }}<br>
+        {{ form.body(size=126) }}<b>
+    </p>
+    <p>{{ form.submit }}</p>
+</form>
+{% endif %}
+
+
+
+{% if current_user.is_anonymous %}
+    <p>You must be logged in to rate a post</p>
+{% else %}
+<p>Please click a star and reload the page to see your rating take effect. </p>
+<div class='post_rating'>
+    <a data-value = '1' class = 'stars_ratings' id='1'>⭐</a>
+    <a data-value = '2' class = 'stars_ratings' id='2'>⭐</a>
+    <a data-value = '3' class = 'stars_ratings' id='3'>⭐</a>
+    <a data-value = '4' class = 'stars_ratings' id='4'>⭐</a>
+    <a data-value = '5' class = 'stars_ratings' id='5'>⭐</a>
+</div>
+{% endif %}
+{% include "footer.html" %}
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+
+$("#1").click(function() {
+    var loc = window.location.href
+    var str = loc.charAt(loc.length - 1)
+    var data1 = {star1: "1", page: str}
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/stars',
+        dataType : 'json',
+        data : JSON.stringify(data1),
+        success : (data1) => {
+            console.log('Sent: ' + data2)
+        },
+        error : (data1) => {
+            console.log(data1)
+        }
+    })
+})
+
+$("#2").click(function() {
+    var loc = window.location.href
+    var str = loc.charAt(loc.length - 1)
+    var data2 = {star2: "2", page: str}
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/stars',
+        dataType : 'json',
+        data : JSON.stringify(data2),
+        success : (data2) => {
+            console.log('Sent: ' + data2)
+        },
+        error : (data2) => {
+            console.log(data2)
+        }
+    })
+})
+
+$("#3").click(function() {
+    var loc = window.location.href
+    var str = loc.charAt(loc.length - 1)
+    var data3 = {star3: "3", page: str}
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/stars',
+        dataType : 'json',
+        data : JSON.stringify(data3),
+        success : (data3) => {
+            console.log('Sent: ' + data3)
+        },
+        error : (data3) => {
+            console.log(data3)
+        }
+    })
+})
+
+$("#4").click(function() {
+    var loc = window.location.href
+    var str = loc.charAt(loc.length - 1)
+    var data4 = {star4: "4", page: str}
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/stars',
+        dataType : 'json',
+        data : JSON.stringify(data4),
+        success : (data4) => {
+            console.log('Sent: ' + data4)
+        },
+        error : (data4) => {
+            console.log(data4)
+        }
+    })
+})
+
+$("#5").click(function() {
+    var loc = window.location.href
+    var str = loc.charAt(loc.length - 1)
+    var data5 = {star5: "5", page: str}
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: '/stars',
+        dataType : 'json',
+        data : JSON.stringify(data5),
+        success : (data5) => {
+            console.log('Sent: ' + data5)
+        },
+        error : (data5) => {
+            console.log(data5)
+        }
+    })
+})
+
+</script>
+
+
+{% endblock scripts %}
